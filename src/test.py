@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import streamlit as st
 import sys
 import warnings
 from crew import CompetitorAnalyst
@@ -12,5 +11,6 @@ def run():
     inputs = {
         'topic': 'https://www.daraz.com.bd'
     }
-    CompetitorAnalyst().crew().kickoff(inputs=inputs)
+    result = CompetitorAnalyst().crew().kickoff(inputs=inputs)
+    print(result)
 run()

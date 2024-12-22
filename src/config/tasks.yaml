@@ -1,66 +1,66 @@
+input_processing_task:
+  description: >
+    Identify and gather key information about the {topic}. For product or startup names, collect relevant publicly available details such as category, description, 
+    and notable facts, using trusted sources.
+  expected_output: >
+    A structured summary of {topic}, containing essential details like category, description, domain information, 
+    and relevant facts, organized and ready for further analysis.
+  agent: input_processing_agent
+
 data_retrieval_task:
   description: >
-    Retrieve competitor data of the company {topic} from various sources accross google, crunchbase, reddit, linkedin and g2.
-    Ensure the data collected is relevant, and accurate.
+    Retrieve competitor data for {topic} from multiple sources, including Google, Crunchbase, LinkedIn, Reddit, 
+    and G2. Ensure the data is comprehensive, accurate, and relevant to the competitor analysis.
   expected_output: >
-    A structured dataset containing information about competitors for the given {topic}.
-    The data should be well-organized and ready for processing.
-  agent: Data_retrieval
+    A structured dataset with detailed information about competitors for {topic}, sourced from multiple platforms. 
+    The data should be normalized, error-free, and ready for subsequent processing.
+  agent: data_retrieval_agent
 
-nlp_processing_task:
+data_processing_task:
   description: >
-    Analyze the retrieved data to extract summaries, key insights, and sentiments.
-    Ensure the processing highlights relevant trends and provides a clear understanding of the data.
+    Analyze the retrieved data to extract key insights, summarize trends, and determine sentiment. The analysis 
+    should highlight important competitor activities, market shifts, and patterns relevant to {topic}.
   expected_output: >
-    A markdown file ('processing.md') containing well-structured summaries and actionable insights about {topic}.
-  agent: NLP_processing
+    A collection of well-structured summaries, actionable insights, and sentiment analysis that provide a clear 
+    understanding of the competitive landscape for {topic}.
+  agent: data_processing_agent
 
 feature_comparison_task:
   description: >
-    Compare features of competitors identified in the data retrieval stage to evaluate strengths, weaknesses, 
-    and unique selling points.
+    Compare key features of the competitors identified in the data retrieval stage. Identify strengths, weaknesses, 
+    and unique selling points (USPs) for {topic} relative to its competitors.
   expected_output: >
-    A markdown file containing detailed feature comparisons, highlighting differentiators and key metrics for {topic}.
-  agent: Feature_comparison
+    A detailed feature comparison report that outlines the key differentiators, strengths, and weaknesses between 
+    {topic} and its competitors.
+  agent: feature_comparison_agent
 
 swot_analysis_task:
   description: >
-    Perform a SWOT analysis using insights from the NLP processing and feature comparison tasks.
-    Evaluate the strengths, weaknesses, opportunities, and threats of competitors in relation to {topic}.
+    Conduct a SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis using the insights from the data processing 
+    and feature comparison tasks. Evaluate how competitors' strengths and weaknesses impact {topic}, and identify 
+    new opportunities and potential threats.
   expected_output: >
-    A markdown file providing a comprehensive SWOT analysis of the competitive landscape for {topic}.
-  agent: SWOT_analysis
+    A comprehensive SWOT analysis detailing the competitive landscape for {topic}, including key opportunities and risks.
+  agent: swot_analysis_agent
 
 report_generation_task:
   description: >
-    Compile outputs from all tasks (data retrieval, NLP processing, feature comparison, SWOT analysis) into a single, professionally formatted competitor analysis report.
-    Include key differentiators, feature comparisons, and strategic recommendations.
+    Compile outputs from all tasks (input processing, data retrieval, data processing, feature comparison, SWOT analysis) into a single, professionally formatted competitor analysis report.
+    The report should include key differentiators, feature comparisons, and strategic recommendations, along with an analysis of market positioning, technology, financials, and other critical insights.
   expected_output: >
-    A well-structured, ready-to-use report in markdown file containing:
+    A well-structured, ready-to-use competitor analysis report in markdown format containing:
     - Executive Summary
+    - Market Overview
+    - Competitive Positioning
     - Feature Comparisons
     - SWOT Analysis
     - Strategic Recommendations
-  agent: Report_generation
-
-
-
-
-
-#research_task:
-#  description: >
-#    Conduct a thorough research about {topic}
-#    Make sure you find any interesting and relevant information given
-#    the current year is 2024.
-#  expected_output: >
-#    A list with 10 bullet points of the most relevant information about {topic}
-#  agent: researcher
-#
-#reporting_task:
-#  description: >
-#    Review the context you got and expand each topic into a full section for a report.
-#    Make sure the report is detailed and contains any and all relevant information.
-#  expected_output: >
-#    A fully fledge reports with the mains topics, each with a full section of information.
-#    Formatted as markdown without '```'
-#  agent: reporting_analyst
+    - Business Model Analysis
+    - Technology & Innovation Analysis
+    - Customer Sentiment and Feedback
+    - Financial Overview
+    - Key Partnerships & Alliances
+    - Risk Assessment
+    - Opportunities & Growth Areas
+    - Conclusion
+  agent: report_generation_agent

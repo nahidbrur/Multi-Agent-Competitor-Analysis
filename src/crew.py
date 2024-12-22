@@ -1,9 +1,11 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
-from crewai_tools import ScrapeWebsiteTool, WebsiteSearchTool, SerperDevTool
+from crewai_tools import ScrapeWebsiteTool, SerperDevTool
+from langchain_groq import ChatGroq
 from dotenv import load_dotenv
 from typing import List, Dict
 import pandas as pd
+import os
 load_dotenv()
 
 
@@ -14,107 +16,100 @@ class CompetitorAnalyst():
 	agents_config = 'config/agents.yaml'
 	tasks_config = 'config/tasks.yaml'
 
-	ollama_llm = LLM(
-		model='ollama/llama3.2:3b',
+	llm = LLM(
+		model='ollama/llama3.1:8b',
 		base_url='http://localhost:11434',
 	)
 
-	tool_config = dict(
-        llm=dict(
-            provider="ollama", # or google, openai, anthropic, llama2, ...
-            config=dict(
-                model="llama3.2:3b",
-                # temperature=0.5,
-                # top_p=1,
-                # stream=true,
-            ),
-        ),
-        embedder=dict(
-            provider="ollama", # or openai, ollama, ...
-            config=dict(
-                model="nomic-embed-text"
-            ),
-        ),
-    )
-
-
+	@agent
+	def input_processing_agent(self) -> Agent:
+		return Agent(
+			config=self.agents_config['input_processing'],
+			verbose=True,
+			llm = self.llm,
+			tools =[SerperDevTool(n_results=2),
+					ScrapeWebsiteTool()
+			]
+		)
 
 	@agent
-	def Data_retrieval(self) -> Agent:
+	def data_retrieval_agent(self) -> Agent:
 		return Agent(
 			config=self.agents_config['data_retrieval'],
 			verbose=True,
-			llm = self.ollama_llm,
+			llm = self.llm,
 			tools =[SerperDevTool(),
 					ScrapeWebsiteTool()
 			]
 		)
 
 	@agent
-	def NLP_processing(self) -> Agent:
+	def data_processing_agent(self) -> Agent:
 		return Agent(
-			config=self.agents_config['nlp_processing'],
+			config=self.agents_config['data_processing'],
 			verbose=True,
-			llm = self.ollama_llm,
+			llm = self.llm,
 		)
 
 	@agent
-	def Feature_comparison(self) -> Agent:
+	def feature_comparison_agent(self) -> Agent:
 		return Agent(
 			config=self.agents_config['feature_comparison'],
 			verbose=True,
-			llm = self.ollama_llm,
+			llm = self.llm,
 		)
 
 	@agent
-	def SWOT_analysis(self) -> Agent:
+	def swot_analysis_agent(self) -> Agent:
 		return Agent(
 			config=self.agents_config['swot_analysis'],
 			verbose=True,
-			llm = self.ollama_llm,
+			llm = self.llm,
 		)
 
 	@agent
-	def Report_generation(self) -> Agent:
+	def report_generation_agent(self) -> Agent:
 		return Agent(
 			config=self.agents_config['report_generation'],
 			verbose=True,
-			llm = self.ollama_llm
+			llm = self.llm
 		)
 
 
 ############# task ################
 
 	@task
-	def Data_retrieval_task(self) -> Task:
+	def input_processing_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['input_processing_task'],
+		)
+	
+	@task
+	def data_retrieval_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['data_retrieval_task'],
 		)
 
 	@task
-	def NLP_processing_task(self) -> Task:
+	def data_processing_task(self) -> Task:
 		return Task(
-			config=self.tasks_config['nlp_processing_task'],
-			output_file='processing.md'
+			config=self.tasks_config['data_processing_task'],
 		)
 	@task
-	def Feature_comparison_task(self) -> Task:
+	def feature_comparison_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['feature_comparison_task'],
-			output_file='feature.md'
 		)
 	@task
-	def SWOT_analysis_task(self) -> Task:
+	def swot_analysis_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['swot_analysis_task'],
-			output_file='swot.md'
 		)
 
 	@task
-	def Report_generation_task(self) -> Task:
+	def report_generation_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['report_generation_task'],
-			output_file='report.md'
 		)
 
 	@crew
