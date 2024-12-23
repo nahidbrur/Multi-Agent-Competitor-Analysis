@@ -34,6 +34,13 @@ feature_comparison_task:
     {topic} and its competitors.
   agent: feature_comparison_agent
 
+risk_assessment_task:
+  description: >
+    Evaluate potential risks that could affect the competitive landscape for {topic}. Identify risks such as market volatility, regulatory challenges, or competitive threats that may harm the company or industry.
+  expected_output: >
+    A risk assessment report outlining identified risks, their potential impact, and possible mitigation strategies to help the organization anticipate and manage competitive threats.
+  agent: risk_assessment_agent
+
 swot_analysis_task:
   description: >
     Conduct a SWOT (Strengths, Weaknesses, Opportunities, Threats) analysis using the insights from the data processing 
@@ -45,22 +52,18 @@ swot_analysis_task:
 
 report_generation_task:
   description: >
-    Compile outputs from all tasks (input processing, data retrieval, data processing, feature comparison, SWOT analysis) into a single, professionally formatted competitor analysis report.
-    The report should include key differentiators, feature comparisons, and strategic recommendations, along with an analysis of market positioning, technology, financials, and other critical insights.
+    Compile outputs from all tasks (data_processing_task, feature_comparison_task, risk_assessment_task, swot_analysis_task) into a single, professionally formatted competitor analysis report.
+    Elaborate feature comparison with at least five competitors and SWOT analysis
   expected_output: >
-    A well-structured, ready-to-use competitor analysis report in markdown format containing:
+    A well-structured, 2-3 pages, ready-to-use competitor analysis report in markdown format containing:
     - Executive Summary
     - Market Overview
     - Competitive Positioning
     - Feature Comparisons
     - SWOT Analysis
-    - Strategic Recommendations
-    - Business Model Analysis
-    - Technology & Innovation Analysis
-    - Customer Sentiment and Feedback
     - Financial Overview
     - Key Partnerships & Alliances
     - Risk Assessment
-    - Opportunities & Growth Areas
+    - Strategic Recommendations
     - Conclusion
   agent: report_generation_agent

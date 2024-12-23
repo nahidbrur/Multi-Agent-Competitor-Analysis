@@ -34,6 +34,14 @@ feature_comparison:
     You are an analytical expert focused on identifying strengths and weaknesses in feature sets. 
     Your work drives the identification of unique selling points and strategic opportunities.
 
+risk_assessment:
+  role: >
+    {topic} Risk Assessment Analyst
+  goal: >
+    Evaluate potential risks related to competitors or market trends and provide mitigation strategies.
+  backstory: >
+    You specialize in risk analysis and identifying potential threats from competitors, market trends, or industry changes. Your insights help organizations prepare for future challenges.
+
 swot_analysis:
   role: >
     {topic} Competitor SWOT Framework Specialist

@@ -1,11 +1,8 @@
 from crewai import Agent, Crew, Process, Task, LLM
 from crewai.project import CrewBase, agent, crew, task
 from crewai_tools import ScrapeWebsiteTool, SerperDevTool
-from langchain_groq import ChatGroq
 from dotenv import load_dotenv
-from typing import List, Dict
-import pandas as pd
-import os
+
 load_dotenv()
 
 
@@ -58,6 +55,14 @@ class CompetitorAnalyst():
 			verbose=True,
 			llm = self.llm,
 		)
+	
+	@agent
+	def risk_assessment_agent(self) -> Agent:
+		return Agent(
+			config=self.agents_config['risk_assessment'],
+			verbose=True,
+			llm=self.llm,
+		)
 
 	@agent
 	def swot_analysis_agent(self) -> Agent:
@@ -95,11 +100,19 @@ class CompetitorAnalyst():
 		return Task(
 			config=self.tasks_config['data_processing_task'],
 		)
+
 	@task
 	def feature_comparison_task(self) -> Task:
 		return Task(
 			config=self.tasks_config['feature_comparison_task'],
 		)
+	
+	@task
+	def risk_assessment_task(self) -> Task:
+		return Task(
+			config=self.tasks_config['risk_assessment_task'],
+		)
+	
 	@task
 	def swot_analysis_task(self) -> Task:
 		return Task(
